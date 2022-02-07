@@ -3,7 +3,7 @@ name: Build, test and publish images
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     types: [ opened, synchronize ]
 
