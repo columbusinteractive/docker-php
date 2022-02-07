@@ -3,7 +3,7 @@ ALL: build
 .PHONY: build test push
 
 PARENT_IMAGE := php
-IMAGE := columbus-interactive/php
+IMAGE := columbusinteractive/php
 VERSION ?= latest
 PHP_VERSION = $(firstword $(subst -, ,$(VERSION)))
 

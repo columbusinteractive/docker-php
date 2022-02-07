@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://www.columbus-interactive.de">
-        <img alt="Docker PHP Images logo" src="https://www.columbus-interactive.de/typo3conf/ext/ci_corporate/Resources/Public/assets/img/logo/black.png" />
+    <a href="https://www.columbusinteractive.de">
+        <img alt="Docker PHP Images logo" src="https://www.columbusinteractive.de/typo3conf/ext/ci_corporate/Resources/Public/assets/img/logo/black.png" />
     </a>
 </p>
 

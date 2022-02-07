@@ -2,8 +2,8 @@ SHELL := /bin/bash
 ALL: build
 .PHONY: build test push
 
-PARENT_IMAGE := columbus-interactive/php
-IMAGE := columbus-interactive/php-dev
+PARENT_IMAGE := columbusinteractive/php
+IMAGE := columbusinteractive/php-dev
 VERSION ?= latest
 PHP_VERSION = $(firstword $(subst -, ,$(VERSION)))
 
