@@ -32,6 +32,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
       sockets \
       xsl \
       zip \
+      imagick \
     " \
     && install-php-extensions $PHP_EXTENSIONS \
     && if command -v a2enmod; then a2enmod rewrite; fi

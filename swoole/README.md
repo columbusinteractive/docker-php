@@ -27,11 +27,8 @@ For development environments, you might want to choose an [image with XDebug ins
 ## Available tags
 - `latest`
 - `7.4`
-- `7.4-fpm`
 - `8.0`
-- `8.0-fpm`
 - `8.1`
-- `8.1-fpm`
 
 As you might have guessed, all tags are built on top of the corresponding tag of the official image.
 
@@ -60,6 +57,8 @@ in addition to those you can already find in the [official PHP image](https://hu
 - `xsl`
 - `Zend OPcache`
 - `zip`
+- `openswoole`
+- `inotify`
 
 You will probably not need all this stuff. Even if having some extra extensions loaded ain't a big issue in most cases, you will very likely want to checkout this repository, remove unwanted extensions from the `Dockerfile`, and build your own image — for sometimes removing is easier than adding. 😉
 

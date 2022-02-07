@@ -29,7 +29,8 @@ EXTENSIONS := \
 	Xdebug \
 	xsl \
 	zip \
-	sockets
+	sockets \
+	imagick
 
 build:
 	@echo " =====> Building $(IMAGE):$(VERSION)..."

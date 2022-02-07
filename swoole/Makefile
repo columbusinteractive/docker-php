@@ -29,6 +29,7 @@ EXTENSIONS := \
 	xsl \
 	zip \
 	sockets \
+	imagick \
     openswoole \
     inotify
 

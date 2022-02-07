@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         version: [ '7.4', '8.0', '8.1' ]
-        flavor: [ '', '-fpm']
+        flavor: [ '', '-fpm', '-cli']
         include:
           - version: 'latest'
             flavor: ''
