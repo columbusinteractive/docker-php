@@ -3,7 +3,7 @@ ALL: build
 .PHONY: build test push
 
 PARENT_IMAGE := columbusinteractive/php
-IMAGE := columbusinteractive/php-swoole
+IMAGE := columbusinteractive/php-dev
 VERSION ?= latest
 PHP_VERSION = $(firstword $(subst -, ,$(VERSION)))
 
@@ -55,27 +55,8 @@ test:
 			exit 1; \
 		fi \
 	done
-	@if [[ "$(VERSION)" == *'-apache' ]]; then \
-		apache=`docker container run --rm $(IMAGE):$(VERSION) apache2ctl -M 2> /dev/null`; \
-		if [[ "$${apache}" != *'rewrite_module'* ]]; then \
-			echo 'FAIL [mod_rewrite]'; \
-			exit 1; \
-		fi \
-	fi
 	@if [[ -z `docker container run --rm $(IMAGE):$(VERSION) composer --version 2> /dev/null | grep '^Composer version 2\.[0-9][0-9]*'` ]]; then \
-		echo 'FAIL [Composer 2]'; \
-		exit 1; \
-	fi
-	@if [[ -z `docker container run --rm $(IMAGE):$(VERSION) composer2 --version 2> /dev/null | grep '^Composer version 2\.[0-9][0-9]*'` ]]; then \
-		echo 'FAIL [Composer 2]'; \
-		exit 1; \
-	fi
-	@if [[ -z `docker container run --rm $(IMAGE):$(VERSION) composer1 --version 2> /dev/null | grep '^Composer version 1\.[0-9][0-9]*'` ]]; then \
-		echo 'FAIL [Composer 1]'; \
-		exit 1; \
-	fi
-	@if [[ -z `docker container run --rm $(IMAGE):$(VERSION) composer1 global show 2> /dev/null | grep '^hirak/prestissimo [0-9][0-9]*\.[0-9][0-9]*'` ]]; then \
-		echo 'FAIL [Composer 1 plugin - prestissimo]'; \
+		echo 'FAIL [Composer]'; \
 		exit 1; \
 	fi
 	@echo 'OK'
