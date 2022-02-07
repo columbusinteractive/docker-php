@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         version: [ '7.4', '8.0', '8.1' ]
-        flavor: [ '', '-apache', '-fpm' ]
+        flavor: [ '', '-fpm']
         include:
           - version: 'latest'
             flavor: ''
@@ -40,12 +40,32 @@ jobs:
           tags: columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
           load: true
 
+      - name: Build dev image for testing
+        uses: docker/build-push-action@v2
+        with:
+          cache-to: type=inline
+          context: ./dev
+          build-args: |
+            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
+          tags: columbusinteractive/php-dev:${{ matrix.version }}${{ matrix.flavor }}
+          load: true
+
+      - name: Build swoole image for testing
+        uses: docker/build-push-action@v2
+        with:
+          cache-to: type=inline
+          context: ./swoole
+          build-args: |
+            BASE_IMAGE=${{ matrix.version }}
+          tags: columbusinteractive/php-swoole:${{ matrix.version }}
+          load: true
+
       - name: Test images
         env:
           VERSION: ${{ matrix.version }}${{ matrix.flavor }}
         run: |
           make test VERSION=${VERSION}
-      #         make -C dev test VERSION=${VERSION}
+          make -C dev test VERSION=${VERSION}
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
@@ -65,4 +85,28 @@ jobs:
           build-args: |
             BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
           tags: columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
+          push: true
+
+      - name: Build dev image and push to registry
+        if: "github.event_name != 'pull_request'"
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64
+          cache-to: type=inline
+          context: ./dev
+          build-args: |
+            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
+          tags: columbusinteractive/php-dev:${{ matrix.version }}${{ matrix.flavor }}
+          push: true
+
+      - name: Build swoole image and push to registry
+        if: "github.event_name != 'pull_request'"
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64
+          cache-to: type=inline
+          context: ./swoole
+          build-args: |
+            BASE_IMAGE=${{ matrix.version }}
+          tags: columbusinteractive/php-swoole:${{ matrix.version }}
           push: true

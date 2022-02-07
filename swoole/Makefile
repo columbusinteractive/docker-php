@@ -2,8 +2,8 @@ SHELL := /bin/bash
 ALL: build
 .PHONY: build test push
 
-PARENT_IMAGE := php
-IMAGE := columbusinteractive/php
+PARENT_IMAGE := columbusinteractive/php
+IMAGE := columbusinteractive/php-swoole
 VERSION ?= latest
 PHP_VERSION = $(firstword $(subst -, ,$(VERSION)))
 
@@ -28,7 +28,9 @@ EXTENSIONS := \
 	soap \
 	xsl \
 	zip \
-	sockets
+	sockets \
+    openswoole \
+    inotify
 
 build:
 	@echo " =====> Building $(IMAGE):$(VERSION)..."
