@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         version: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
+        flavor: [ '', '-apache', '-fpm' ]
         include:
           - version: 'latest'
             flavor: ''
@@ -37,16 +38,6 @@ jobs:
           build-args: |
             BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
           tags: columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
-          load: true
-
-      - name: Build dev image for testing
-        uses: docker/build-push-action@v2
-        with:
-          cache-to: type=inline
-          context: ./dev
-          build-args: |
-            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
-          tags: columbusinteractive/php-dev:${{ matrix.version }}${{ matrix.flavor }}
           load: true
 
       - name: Test images
@@ -74,16 +65,4 @@ jobs:
           build-args: |
             BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
           tags: columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
-          push: true
-
-      - name: Build dev image and push to registry
-        if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v2
-        with:
-          platforms: linux/amd64,linux/arm64
-          cache-to: type=inline
-          context: ./dev
-          build-args: |
-            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
-          tags: columbusinteractive/php-dev:${{ matrix.version }}${{ matrix.flavor }}
           push: true
