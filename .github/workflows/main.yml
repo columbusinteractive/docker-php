@@ -18,9 +18,6 @@ jobs:
       matrix:
         version: [ '7.4', '8.0', '8.1' ]
         flavor: [ '', '-fpm', '-cli']
-        include:
-          - version: 'latest'
-            flavor: ''
     steps:
       - uses: actions/checkout@v2
 
