@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=latest
 FROM php:${BASE_IMAGE}
-LABEL maintainer="hello@columbusinteractive.de"
+LABEL maintainer="hello@columbus-interactive.de"
 
 # Download script to install PHP extensions and dependencies
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/

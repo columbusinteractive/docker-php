@@ -12,7 +12,7 @@ jobs:
   docker:
     name: Build, test and publish
     runs-on: ubuntu-latest
-#    if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
+    if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
     strategy:
       fail-fast: true
       matrix:
@@ -52,7 +52,7 @@ jobs:
           push: true
 
       - name: Build dev image and push to registry
-        if: github.event_name != 'pull_request' && ${{ matrix.flavor != '-cli' }}
+        if: "github.event_name != 'pull_request'"
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64,linux/arm64
@@ -64,13 +64,12 @@ jobs:
           push: true
 
       - name: Build swoole image and push to registry
-        if: github.event_name != 'pull_request' && ${{ matrix.flavor == '-cli' }}
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64,linux/arm64
           cache-to: type=inline
           context: ./swoole
           build-args: |
-            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
+            BASE_IMAGE=${{ matrix.version }}-cli
           tags: columbusinteractive/php-swoole:${{ matrix.version }}
           push: true
