@@ -20,7 +20,7 @@
 
 Docker images built on top of the [official PHP images](https://hub.docker.com/r/_/php/) with the addition of some common and useful extensions, installed with [mlocati/docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer). You can find these images on the [Docker Hub](https://hub.docker.com/r/columbusinteractive/php/) (and if you're reading this file, you're probably already there).
 
-An automated build is set up, so they should be always up-to-date with the Dockerfiles in the [GitHub repository](https://github.com/columbusinteractive/docker-php). Also, every time an official PHP image is updated, a rebuild is triggered, so that you will always find the latest security patches installed in these images.
+An automated build is set up, so they should be always up-to-date with the Dockerfiles in the [GitHub repository](https://github.com/columbusinteractive/docker-php).
 
 For development environments, you might want to choose an [image with XDebug installed](https://hub.docker.com/r/columbusinteractive/php-dev/) instead.
 
@@ -57,6 +57,7 @@ in addition to those you can already find in the [official PHP image](https://hu
 - `xsl`
 - `Zend OPcache`
 - `zip`
+- `gettext`
 - `xdebug`
 
 You will probably not need all this stuff. Even if having some extra extensions loaded ain't a big issue in most cases, you will very likely want to checkout this repository, remove unwanted extensions from the `Dockerfile`, and build your own image — for sometimes removing is easier than adding. 😉
