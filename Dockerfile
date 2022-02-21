@@ -37,12 +37,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
     " \
     && install-php-extensions $PHP_EXTENSIONS
 
-# Install Composer.
+# Install composer
+ARG COMPOSER_MAJOR_VERSION=2
 ENV PATH=$PATH:/root/composer/vendor/bin \
-  COMPOSER_ALLOW_SUPERUSER=1 \
-  COMPOSER_HOME=/root/composer
-
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-RUN php -r "unlink('composer-setup.php');"
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/root/composer
+RUN curl -sSL -o composer-setup.php https://getcomposer.org/installer \
+    && curl -sSL -o composer-setup.php.sha384sum https://composer.github.io/installer.sha384sum \
+    && sha384sum -c composer-setup.php.sha384sum \
+    && php composer-setup.php --$COMPOSER_MAJOR_VERSION --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php composer-setup.php.sha384sum
