@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=latest
+ARG BASE_IMAGE
 FROM php:${BASE_IMAGE}
 LABEL maintainer="hello@columbus-interactive.de"
 

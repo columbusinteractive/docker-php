@@ -1,5 +1,5 @@
-ARG BASE_IMAGE=latest
-FROM columbusinteractive/php:${BASE_IMAGE}
+ARG BASE_IMAGE
+FROM php:${BASE_IMAGE}
 LABEL maintainer="hello@columbus-interactive.de"
 
 RUN IPE_DONT_ENABLE=1 install-php-extensions openswoole \
