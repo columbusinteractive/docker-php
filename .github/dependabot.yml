@@ -2,6 +2,7 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+
 updates:
 
   # Maintain dependencies for GitHub Actions
@@ -11,6 +12,11 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "docker"
-    directory: "/_/php"
+    directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/swoole"
+    schedule:
+      interval: "weekly"
