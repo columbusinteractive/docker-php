@@ -2,7 +2,7 @@ ARG BASE_IMAGE=latest
 FROM php:${BASE_IMAGE}
 LABEL maintainer="hello@columbus-interactive.de"
 
-RUN apt-get update && apt-get install git -y
+RUN apt-get update && apt-get install git curl zip unzip -y
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions
