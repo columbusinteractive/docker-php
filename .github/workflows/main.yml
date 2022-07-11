@@ -37,7 +37,7 @@ jobs:
 
       - name: Build image and push to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
@@ -50,7 +50,7 @@ jobs:
 
       - name: Build dev image and push to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           platforms: linux/amd64,linux/arm64
           cache-to: type=inline
@@ -61,7 +61,7 @@ jobs:
           push: true
 
       - name: Build swoole image and push to registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         if: "!contains(matrix.flavor, 'fpm')"
         with:
           platforms: linux/amd64,linux/arm64
