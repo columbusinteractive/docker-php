@@ -34,6 +34,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
       zip \
       imagick \
       gettext \
+      apcu \
     " \
     && install-php-extensions $PHP_EXTENSIONS
 
