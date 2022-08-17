@@ -39,6 +39,7 @@ RUN PHP_EXTENSIONS=" \
       imagick \
       gettext \
       apcu \
+      pcntl \
     " \
     && install-php-extensions $PHP_EXTENSIONS
 

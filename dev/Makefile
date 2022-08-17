@@ -30,7 +30,8 @@ EXTENSIONS := \
 	xsl \
 	zip \
 	sockets \
-	imagick
+	imagick \
+	pcntl
 
 build:
 	@echo " =====> Building $(IMAGE):$(VERSION)..."

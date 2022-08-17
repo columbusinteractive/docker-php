@@ -30,6 +30,7 @@ EXTENSIONS := \
 	zip \
 	sockets \
 	imagick \
+	pcntl \
     openswoole \
     inotify
 
