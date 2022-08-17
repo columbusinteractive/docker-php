@@ -44,12 +44,13 @@ RUN PHP_EXTENSIONS=" \
     " \
     && install-php-extensions $PHP_EXTENSIONS
 
-# Install Composer.
+# Install composer
+ARG COMPOSER_MAJOR_VERSION=2
 ENV PATH=$PATH:/root/composer/vendor/bin \
-  COMPOSER_ALLOW_SUPERUSER=1 \
-  COMPOSER_HOME=/root/composer
-
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-RUN php -r "unlink('composer-setup.php');"
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/root/composer
+RUN curl -sSL -o composer-setup.php https://getcomposer.org/installer \
+    && curl -sSL -o composer-setup.php.sha384sum https://composer.github.io/installer.sha384sum \
+    && sha384sum -c composer-setup.php.sha384sum \
+    && php composer-setup.php --$COMPOSER_MAJOR_VERSION --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php composer-setup.php.sha384sum
