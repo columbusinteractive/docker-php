@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
         curl \
         git \
         zip \
-        unzip \
+        unzip
 
 # iconv, mbstring and pdo_sqlite are omitted as they are already installed
 RUN PHP_EXTENSIONS=" \
