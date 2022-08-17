@@ -28,7 +28,8 @@ EXTENSIONS := \
 	soap \
 	xsl \
 	zip \
-	sockets
+	sockets \
+	pcntl
 
 build:
 	@echo " =====> Building $(IMAGE):$(VERSION)..."
