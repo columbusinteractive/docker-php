@@ -14,7 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
 # Install docker-php-extension-installer
 RUN curl -sSL -o /usr/local/bin/install-php-extensions \
     https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
-    && chmod +x /usr/local/bin/install-php-extensions \
+    && chmod +x /usr/local/bin/install-php-extensions
 
 # iconv, mbstring and pdo_sqlite are omitted as they are already installed
 RUN PHP_EXTENSIONS=" \
