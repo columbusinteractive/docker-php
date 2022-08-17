@@ -8,7 +8,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
         curl \
         git \
         zip \
-        unzip
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install docker-php-extension-installer
 RUN curl -sSL -o /usr/local/bin/install-php-extensions \
