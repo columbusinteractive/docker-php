@@ -25,7 +25,6 @@ An automated build is set up, so they should be always up-to-date with the Docke
 For development environments, you might want to choose an [image with XDebug installed](https://hub.docker.com/r/columbusinteractive/php-dev/) instead.
 
 ## Available tags
-- `latest`
 - `7.4`
 - `7.4-fpm`
 - `8.0`
@@ -44,7 +43,6 @@ in addition to those you can already find in the [official PHP image](https://hu
 - `calendar`
 - `exif`
 - `gd`
-- `imagick`
 - `iconv`
 - `intl`
 - `ldap`
@@ -60,7 +58,10 @@ in addition to those you can already find in the [official PHP image](https://hu
 - `xsl`
 - `Zend OPcache`
 - `zip`
+- `imagick`
 - `gettext`
+- `apcu`
+- `pcntl` 
 
 You will probably not need all this stuff. Even if having some extra extensions loaded ain't a big issue in most cases, you will very likely want to checkout this repository, remove unwanted extensions from the `Dockerfile`, and build your own image — for sometimes removing is easier than adding. 😉
 
