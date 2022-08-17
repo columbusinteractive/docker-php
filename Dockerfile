@@ -2,13 +2,14 @@ ARG BASE_IMAGE=latest
 FROM php:${BASE_IMAGE}
 LABEL maintainer="hello@columbus-interactive.de"
 
-# Install some basic packages
+# Install some packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
         curl \
         git \
         zip \
         unzip \
+        imagemagick \
     && rm -rf /var/lib/apt/lists/*
 
 # Install docker-php-extension-installer
