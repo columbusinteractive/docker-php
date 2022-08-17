@@ -62,7 +62,7 @@ jobs:
 
       - name: Build swoole image and push to registry
         uses: docker/build-push-action@v3
-        if: "!contains(matrix.flavor, 'fpm')"
+        if: "github.event_name != 'pull_request' && !contains(matrix.flavor, 'fpm')"
         with:
           platforms: linux/amd64,linux/arm64
           cache-to: type=inline
