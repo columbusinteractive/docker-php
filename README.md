@@ -31,7 +31,9 @@ For development environments, you might want to choose an [image with XDebug ins
 - `8.0-fpm`
 - `8.1`
 - `8.1-fpm`
-
+- `8.2`
+- `8.2-fpm`
+- 
 As you might have guessed, all tags are built on top of the corresponding tag of the official image.
 
 ## Installed extensions

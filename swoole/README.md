@@ -29,6 +29,7 @@ For development environments, you might want to choose an [image with XDebug ins
 - `7.4`
 - `8.0`
 - `8.1`
+- `8.2`
 
 As you might have guessed, all tags are built on top of the corresponding tag of the official image.
 
