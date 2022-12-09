@@ -26,7 +26,6 @@ For development environments, you might want to choose an [image with XDebug ins
 
 ## Available tags
 - `latest`
-- `7.4`
 - `8.0`
 - `8.1`
 - `8.2`

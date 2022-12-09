@@ -25,8 +25,6 @@ An automated build is set up, so they should be always up-to-date with the Docke
 For development environments, you might want to choose an [image with XDebug installed](https://hub.docker.com/r/columbusinteractive/php-dev/) instead.
 
 ## Available tags
-- `7.4`
-- `7.4-fpm`
 - `8.0`
 - `8.0-fpm`
 - `8.1`
