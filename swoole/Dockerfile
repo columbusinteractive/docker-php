@@ -2,4 +2,4 @@ ARG BASE_IMAGE=latest
 FROM columbusinteractive/php:${BASE_IMAGE}
 LABEL maintainer="hello@columbus-interactive.de"
 
-RUN install-php-extensions openswoole inotify
+RUN install-php-extensions openswoole-^4.12 inotify
