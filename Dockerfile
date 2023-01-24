@@ -24,32 +24,35 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
 COPY --from=mlocati/php-extension-installer:1 \
     /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 
-# iconv, mbstring and pdo_sqlite are omitted as they are already installed
-RUN PHP_EXTENSIONS=" \
-      bcmath \
-      bz2 \
-      calendar \
-      exif \
-      gd \
-      intl \
-      ldap \
-      memcached \
-      mysqli \
-      opcache \
-      pdo_mysql \
-      pdo_pgsql \
-      pgsql \
-      redis \
-      soap \
-      sockets \
-      xsl \
-      zip \
-      imagick \
-      gettext \
-      apcu \
-      pcntl \
-    " \
-    && install-php-extensions $PHP_EXTENSIONS
+# Install PHP extensions
+RUN install-php-extensions \
+    amqp \
+    apcu \
+    bcmath \
+    bz2 \
+    calendar \
+    event \
+    exif \
+    gd \
+    gettext \
+    iconv \
+    imagick \
+    intl \
+    ldap \
+    mbstring \
+    memcached \
+    mysqli \
+    opcache \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    pdo_sqlite \
+    pgsql \
+    redis \
+    soap \
+    sockets \
+    xsl \
+    zip
 
 # Install composer
 ENV COMPOSER_HOME=/root/.local/share/composer
