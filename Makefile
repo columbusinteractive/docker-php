@@ -38,10 +38,19 @@ PHP_EXTENSIONS := \
 
 build:
 	@echo " =====> Building $(IMAGE_NAME):$(IMAGE_TAG) ..."
-	docker image build --pull \
+	@if test -r Dockerfile; then \
+		DOCKERFILE=`cat Dockerfile`; \
+	elif test -r Dockerfile.m4; then \
+		DOCKERFILE=`m4 Dockerfile.m4`; \
+	fi; \
+	if test -z "$${DOCKERFILE}"; then \
+		echo "FAIL [dockerfile not found]" 1>&2; \
+		exit 1; \
+	fi; \
+	echo "$${DOCKERFILE}" | docker image build --pull \
 		--build-arg "BASE_IMAGE_TAG=$(BASE_IMAGE_TAG)" \
 		--tag $(IMAGE_NAME):$(IMAGE_TAG) \
-		.
+		-
 
 test:
 	@if ! docker image inspect $(IMAGE_NAME):$(IMAGE_TAG) 1>/dev/null; then \
