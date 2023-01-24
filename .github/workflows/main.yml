@@ -6,6 +6,8 @@ on:
       - main
   pull_request:
     types: [ opened, synchronize ]
+  schedule:
+    - cron: 0 0 * * 0
 
 env:
   PLATFORMS: linux/amd64,linux/arm64
