@@ -53,12 +53,8 @@ RUN PHP_EXTENSIONS=" \
     && install-php-extensions $PHP_EXTENSIONS
 
 # Install composer
-ARG COMPOSER_MAJOR_VERSION=2
-ENV PATH=$PATH:/root/composer/vendor/bin \
-    COMPOSER_ALLOW_SUPERUSER=1 \
-    COMPOSER_HOME=/root/composer
-RUN curl -sSL -o composer-setup.php https://getcomposer.org/installer \
-    && curl -sSL -o composer-setup.php.sha384sum https://composer.github.io/installer.sha384sum \
-    && sha384sum -c composer-setup.php.sha384sum \
-    && php composer-setup.php --$COMPOSER_MAJOR_VERSION --install-dir=/usr/local/bin --filename=composer \
-    && rm composer-setup.php composer-setup.php.sha384sum
+ENV COMPOSER_HOME=/root/.local/share/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PATH=$PATH:$COMPOSER_HOME/vendor/bin
+RUN mkdir -p "$COMPOSER_HOME" && chmod 777 "$COMPOSER_HOME"
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
