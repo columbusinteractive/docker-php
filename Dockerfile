@@ -10,15 +10,19 @@ LABEL org.opencontainers.image.source="https://github.com/columbusinteractive/do
 LABEL org.opencontainers.image.vendor="Columbus Interactive GmbH"
 LABEL org.opencontainers.image.authors="hello@columbus-interactive.de"
 
-# Install some packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
-        curl \
-        git \
-        zip \
-        unzip \
-        imagemagick \
-    && rm -rf /var/lib/apt/lists/*
+# Install system packages
+RUN if which apt-get > /dev/null; then \
+        export DEBIAN_FRONTEND=noninteractive \
+            && apt-get update \
+            && apt-get install -y imagemagick \
+            && rm -rf /var/lib/apt/lists/* \
+        ; \
+    fi; \
+    if which apk > /dev/null; then \
+        apk update \
+            && apk add --no-cache imagemagick \
+        ; \
+    fi;
 
 # Install php-extension-installer
 COPY --from=mlocati/php-extension-installer:1 \
