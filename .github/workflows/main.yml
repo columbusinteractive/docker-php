@@ -64,9 +64,10 @@ jobs:
       matrix:
         version: [ '8.0', '8.1', '8.2' ]
         flavor: [ '', '-fpm' ]
+        distro: [ '', '-alpine' ]
     env:
       IMAGE_NAME: columbusinteractive/php
-      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
       BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
       BASE_DIR: .
     steps: *steps-build-test-publish-image
@@ -80,9 +81,10 @@ jobs:
       matrix:
         version: [ '8.0', '8.1', '8.2' ]
         flavor: [ '', '-fpm' ]
+        distro: [ '', '-alpine' ]
     env:
       IMAGE_NAME: columbusinteractive/php-dev
-      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
       BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
       BASE_DIR: ./dev
     steps: *steps-build-test-publish-image
@@ -95,9 +97,10 @@ jobs:
     strategy:
       matrix:
         version: [ '8.0', '8.1', '8.2' ]
+        distro: [ '', '-alpine' ]
     env:
       IMAGE_NAME: columbusinteractive/php-swoole
-      IMAGE_TAG: ${{ matrix.version }}
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
       BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
       BASE_DIR: ./swoole
     steps: *steps-build-test-publish-image
