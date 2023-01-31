@@ -6,20 +6,30 @@ on:
       - main
   pull_request:
     types: [ opened, synchronize ]
+  schedule:
+    - cron: 0 0 * * 0
+
+env:
+  PLATFORMS: linux/amd64,linux/arm64
 
 jobs:
-
-  docker:
-    name: Build, test and publish
+  base-images:
+    name: Build, test and publish base images
     runs-on: ubuntu-latest
     if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
     strategy:
-      fail-fast: true
       matrix:
         version: [ '8.0', '8.1', '8.2' ]
-        flavor: [ '', '-fpm']
+        flavor: [ '', '-fpm' ]
+        distro: [ '', '-alpine' ]
+    env:
+      IMAGE_NAME: columbusinteractive/php
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
+      BASE_DIR: .
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -27,6 +37,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Build image
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          load: true
+
+      - name: Test image
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
@@ -35,39 +57,127 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build image and push to registry
+      - name: Push image to registry
         if: "github.event_name != 'pull_request'"
         uses: docker/build-push-action@v3
         with:
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=registry,ref=columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
-          cache-to: type=inline
-          context: .
-          build-args: |
-            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
-          tags: columbusinteractive/php:${{ matrix.version }}${{ matrix.flavor }}
+          platforms: ${{ env.PLATFORMS }}
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
 
-      - name: Build dev image and push to registry
+  dev-images:
+    name: Build, test and publish dev images
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
+    needs: base-images
+    strategy:
+      matrix:
+        version: [ '8.0', '8.1', '8.2' ]
+        flavor: [ '', '-fpm' ]
+        distro: [ '', '-alpine' ]
+    env:
+      IMAGE_NAME: columbusinteractive/php-dev
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
+      BASE_DIR: ./dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build image
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          load: true
+
+      - name: Test image
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
+
+      - name: Login to DockerHub
+        if: "github.event_name != 'pull_request'"
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push image to registry
         if: "github.event_name != 'pull_request'"
         uses: docker/build-push-action@v3
         with:
-          platforms: linux/amd64,linux/arm64
-          cache-to: type=inline
-          context: ./dev
-          build-args: |
-            BASE_IMAGE=${{ matrix.version }}${{ matrix.flavor }}
-          tags: columbusinteractive/php-dev:${{ matrix.version }}${{ matrix.flavor }}
+          platforms: ${{ env.PLATFORMS }}
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
 
-      - name: Build swoole image and push to registry
+  swoole-images:
+    name: Build, test and publish swoole images
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
+    needs: base-images
+    strategy:
+      matrix:
+        version: [ '8.0', '8.1', '8.2' ]
+        distro: [ '', '-alpine' ]
+    env:
+      IMAGE_NAME: columbusinteractive/php-swoole
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
+      BASE_DIR: ./swoole
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build image
         uses: docker/build-push-action@v3
-        if: "github.event_name != 'pull_request' && !contains(matrix.flavor, 'fpm')"
         with:
-          platforms: linux/amd64,linux/arm64
-          cache-to: type=inline
-          context: ./swoole
-          build-args: |
-            BASE_IMAGE=${{ matrix.version }}
-          tags: columbusinteractive/php-swoole:${{ matrix.version }}
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          load: true
+
+      - name: Test image
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
+
+      - name: Login to DockerHub
+        if: "github.event_name != 'pull_request'"
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push image to registry
+        if: "github.event_name != 'pull_request'"
+        uses: docker/build-push-action@v3
+        with:
+          platforms: ${{ env.PLATFORMS }}
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
