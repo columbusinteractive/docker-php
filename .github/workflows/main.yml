@@ -205,3 +205,66 @@ jobs:
           cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
+
+  parallel-images:
+    name: Build, test and publish parallel images
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
+    strategy:
+      matrix:
+        version: [ '7.4', '8.0', '8.1', '8.2' ]
+        distro: [ '', '-alpine' ]
+    env:
+      IMAGE_NAME: columbusinteractive/php-parallel
+      IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}-zts${{ matrix.distro }}
+      BASE_DIR: ./parallel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Dockerfile
+        run: |
+          pushd ${{ env.BASE_DIR }}
+          if ! test -r Dockerfile && test -r Dockerfile.m4; then
+            m4 Dockerfile.m4 > Dockerfile
+          fi
+          popd
+
+      - name: Build image
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          load: true
+
+      - name: Test image
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
+
+      - name: Login to DockerHub
+        if: "github.event_name != 'pull_request'"
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push image to registry
+        if: "github.event_name != 'pull_request'"
+        uses: docker/build-push-action@v3
+        with:
+          platforms: ${{ env.PLATFORMS }}
+          context: ${{ env.BASE_DIR }}
+          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
+          pull: true
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          push: true
