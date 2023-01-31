@@ -56,8 +56,8 @@ test:
 	fi
 
 	@if [[ "$(PHP_VERSION)" != "latest" ]]; then \
-		@echo "=====> Testing php version ..." \
-		@IMAGE_PHP_VERSION=`php --version | head -n 1 | sed -E 's/PHP ([0-9]+\.[0-9]+).*/\1/'`; \
+		echo "=====> Testing php version ..."; \
+		IMAGE_PHP_VERSION=`php --version | head -n 1 | sed -E 's/PHP ([0-9]+\.[0-9]+).*/\1/'`; \
 		if [[ "$${IMAGE_PHP_VERSION}" != "$(PHP_VERSION)" ]]; then \
 			echo "FAIL [wrong php version: expected $(PHP_VERSION) got $${IMAGE_PHP_VERSION}]" 1>&2; \
 			exit 1; \
