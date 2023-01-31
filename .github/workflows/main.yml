@@ -48,7 +48,7 @@ jobs:
           load: true
 
       - name: Test image
-        run: make -C ${{ env.BASE_DIR }} test
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
@@ -105,7 +105,7 @@ jobs:
           load: true
 
       - name: Test image
-        run: make -C ${{ env.BASE_DIR }} test
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
@@ -161,7 +161,7 @@ jobs:
           load: true
 
       - name: Test image
-        run: make -C ${{ env.BASE_DIR }} test
+        run: make -C ${{ env.BASE_DIR }} "IMAGE_NAME=${{ env.IMAGE_NAME }}" "IMAGE_TAG=${{ env.IMAGE_TAG }}" test
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
