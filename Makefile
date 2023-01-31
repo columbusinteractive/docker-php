@@ -57,7 +57,7 @@ test:
 
 	@if [[ "$(PHP_VERSION)" != "latest" ]]; then \
 		echo "=====> Testing php version ..."; \
-		IMAGE_PHP_VERSION=`php --version | head -n 1 | sed -E 's/PHP ([0-9]+\.[0-9]+).*/\1/'`; \
+		IMAGE_PHP_VERSION=`docker run --rm $(IMAGE_NAME):$(IMAGE_TAG) php --version | head -n 1 | sed -E 's/PHP ([0-9]+\.[0-9]+).*/\1/'`; \
 		if [[ "$${IMAGE_PHP_VERSION}" != "$(PHP_VERSION)" ]]; then \
 			echo "FAIL [wrong php version: expected $(PHP_VERSION) got $${IMAGE_PHP_VERSION}]" 1>&2; \
 			exit 1; \
@@ -80,7 +80,7 @@ test:
 	fi
 
 	@echo "=====> Testing composer version ..."
-	@IMAGE_COMPOSER_VERSION=`composer --version --no-ansi | sed -E 's/Composer version ([0-9]+).*/\1/'`; \
+	@IMAGE_COMPOSER_VERSION=`docker run --rm $(IMAGE_NAME):$(IMAGE_TAG) composer --version --no-ansi | sed -E 's/Composer version ([0-9]+).*/\1/'`; \
 	if [[ "$${IMAGE_COMPOSER_VERSION}" != "2" ]]; then \
 		echo "FAIL [wrong composer version: expected 2 got $${IMAGE_COMPOSER_VERSION}]" 1>&2; \
 		exit 1; \
