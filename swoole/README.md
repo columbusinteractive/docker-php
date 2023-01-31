@@ -28,7 +28,6 @@ Also see our base image: [columbusinteractive/php](https://hub.docker.com/r/colu
 - `8.2`, `8.2-alpine`
 - `8.1`, `8.1-alpine`
 - `8.0`, `8.0-alpine`
-- `7.4`, `7.4-alpine`
 
 ## Installed extensions
 The following modules and extensions have been enabled, in addition to those you can already find in our [base image](https://hub.docker.com/r/columbusinteractive/php/):

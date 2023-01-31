@@ -28,7 +28,6 @@ Also see our base image: [columbusinteractive/php](https://hub.docker.com/r/colu
 - `8.2`, `8.2-alpine`, `8.2-fpm`, `8.2-fpm-alpine`
 - `8.1`, `8.1-alpine`, `8.1-fpm`, `8.1-fpm-alpine`
 - `8.0`, `8.0-alpine`, `8.0-fpm`, `8.0-fpm-alpine`
-- `7.4`, `7.4-alpine`, `7.4-fpm`, `7.4-fpm-alpine`
 
 ## Installed extensions
 The following modules and extensions have been enabled, in addition to those you can already find in our [base image](https://hub.docker.com/r/columbusinteractive/php/):
