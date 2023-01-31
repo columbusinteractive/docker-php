@@ -25,7 +25,7 @@ jobs:
     env:
       IMAGE_NAME: columbusinteractive/php
       IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
-      BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
       BASE_DIR: .
     steps: &steps-build-test-publish-image
       - name: Checkout
@@ -82,7 +82,7 @@ jobs:
     env:
       IMAGE_NAME: columbusinteractive/php-dev
       IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
-      BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.flavor }}${{ matrix.distro }}
       BASE_DIR: ./dev
     steps: *steps-build-test-publish-image
 
@@ -98,6 +98,6 @@ jobs:
     env:
       IMAGE_NAME: columbusinteractive/php-swoole
       IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
-      BASE_IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      BASE_IMAGE_TAG: ${{ matrix.version }}${{ matrix.distro }}
       BASE_DIR: ./swoole
     steps: *steps-build-test-publish-image
