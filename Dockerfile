@@ -1,5 +1,6 @@
-ARG BASE_IMAGE=latest
-FROM php:${BASE_IMAGE}
+ARG BASE_IMAGE_TAG=latest
+
+FROM php:${BASE_IMAGE_TAG}
 
 LABEL org.opencontainers.image.title="PHP"
 LABEL org.opencontainers.image.description="A popular general-purpose scripting language that is especially suited to web development."
