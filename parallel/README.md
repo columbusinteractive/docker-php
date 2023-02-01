@@ -34,7 +34,6 @@ Also see our base image: [columbusinteractive/php](https://hub.docker.com/r/colu
 The following modules and extensions have been enabled, in addition to those you can already find in our [base image](https://hub.docker.com/r/columbusinteractive/php/):
 
 - `parallel`
-- `pthreads`
 
 ## Composer
 Composer v2 is installed globally in all images. Please refer to their [documentation](https://getcomposer.org/doc/) for usage hints.
