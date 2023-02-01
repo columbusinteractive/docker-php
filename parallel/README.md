@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/columbusinteractive/docker-php/actions"><img alt="GitHub Workflow Status" src=" https://img.shields.io/github/actions/workflow/status/columbusinteractive/docker-php/main.yml?branch=main&style=flat-square"></a>
+    <a href="https://github.com/columbusinteractive/docker-php/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/columbusinteractive/docker-php/main.yml?branch=main&style=flat-square"></a>
     <a href="https://github.com/columbusinteractive/docker-php"><img alt="Source link" src="https://img.shields.io/badge/Source-GitHub-lightgrey.svg?style=flat-square"></a>
     <a href="https://www.columbus-interactive.de"><img alt="Authors link" src="https://img.shields.io/badge/Authors-columbusinteractive-lightgrey.svg?style=flat-square"></a>
     <a href="https://hub.docker.com/r/columbusinteractive/php-parallel/"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/columbusinteractive/php-parallel.svg?style=flat-square"></a>
