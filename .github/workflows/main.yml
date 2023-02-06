@@ -39,11 +39,10 @@ jobs:
 
       - name: Build Dockerfile
         run: |
-          pushd ${{ env.BASE_DIR }}
           if ! test -r Dockerfile && test -r Dockerfile.m4; then
             m4 Dockerfile.m4 > Dockerfile
           fi
-          popd
+        working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
         uses: docker/build-push-action@v4
@@ -104,11 +103,10 @@ jobs:
 
       - name: Build Dockerfile
         run: |
-          pushd ${{ env.BASE_DIR }}
           if ! test -r Dockerfile && test -r Dockerfile.m4; then
             m4 Dockerfile.m4 > Dockerfile
           fi
-          popd
+        working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
         uses: docker/build-push-action@v4
@@ -168,11 +166,10 @@ jobs:
 
       - name: Build Dockerfile
         run: |
-          pushd ${{ env.BASE_DIR }}
           if ! test -r Dockerfile && test -r Dockerfile.m4; then
             m4 Dockerfile.m4 > Dockerfile
           fi
-          popd
+        working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
         uses: docker/build-push-action@v3
@@ -231,11 +228,10 @@ jobs:
 
       - name: Build Dockerfile
         run: |
-          pushd ${{ env.BASE_DIR }}
           if ! test -r Dockerfile && test -r Dockerfile.m4; then
             m4 Dockerfile.m4 > Dockerfile
           fi
-          popd
+        working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
         uses: docker/build-push-action@v4
