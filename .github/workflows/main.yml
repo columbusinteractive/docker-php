@@ -46,7 +46,7 @@ jobs:
           popd
 
       - name: Build image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
@@ -111,7 +111,7 @@ jobs:
           popd
 
       - name: Build image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -132,7 +132,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
@@ -238,7 +238,7 @@ jobs:
           popd
 
       - name: Build image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -259,7 +259,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
