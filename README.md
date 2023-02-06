@@ -25,6 +25,7 @@ An automated build is set up, so they should be always up-to-date with the Docke
 Also see our other image variants:
 - [columbusinteractive/php-dev](https://hub.docker.com/r/columbusinteractive/php-dev/) (with Xdebug)
 - [columbusinteractive/php-swoole](https://hub.docker.com/r/columbusinteractive/php-swoole/) (with Open Swoole)
+- [columbusinteractive/php-parallel](https://hub.docker.com/r/columbusinteractive/php-parallel/) (ZTS with parallel)
 
 ## Available tags
 - `8.2`, `8.2-alpine`, `8.2-fpm`, `8.2-fpm-alpine`
