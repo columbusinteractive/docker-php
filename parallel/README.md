@@ -25,6 +25,7 @@ An automated build is set up, so they should be always up-to-date with the Docke
 Also see our base image: [columbusinteractive/php](https://hub.docker.com/r/columbusinteractive/php/)
 
 ## Available tags
+- `8.3`, `8.3-alpine`
 - `8.2`, `8.2-alpine`
 - `8.1`, `8.1-alpine`
 - `8.0`, `8.0-alpine`
