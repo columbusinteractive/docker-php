@@ -11,6 +11,7 @@ RUN install-php-extensions \
     calendar \
     event \
     exif \
+    ftp \
     gd \
     gettext \
     iconv \

@@ -43,6 +43,7 @@ The following modules and extensions have been enabled, in addition to those you
 - `calendar`
 - `event`
 - `exif`
+- `ftp`
 - `gd`
 - `gettext`
 - `iconv`
