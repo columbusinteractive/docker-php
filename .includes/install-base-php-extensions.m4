@@ -15,7 +15,7 @@ RUN install-php-extensions \
     gd \
     gettext \
     iconv \
-    Imagick/imagick@master \
+    imagick \
     intl \
     ldap \
     mbstring \
