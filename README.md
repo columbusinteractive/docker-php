@@ -28,6 +28,7 @@ Also see our other image variants:
 - [columbusinteractive/php-parallel](https://hub.docker.com/r/columbusinteractive/php-parallel/) (ZTS with parallel)
 
 ## Available tags
+- `8.4`, `8.4-alpine`, `8.4-fpm`, `8.4-fpm-alpine`
 - `8.3`, `8.3-alpine`, `8.3-fpm`, `8.3-fpm-alpine`
 - `8.2`, `8.2-alpine`, `8.2-fpm`, `8.2-fpm-alpine`
 - `8.1`, `8.1-alpine`, `8.1-fpm`, `8.1-fpm-alpine`

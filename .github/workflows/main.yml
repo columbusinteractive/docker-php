@@ -19,7 +19,7 @@ jobs:
     if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
     strategy:
       matrix:
-        version: [ '8.0', '8.1', '8.2', '8.3' ]
+        version: [ '8.0', '8.1', '8.2', '8.3', '8.4' ]
         flavor: [ '', '-fpm' ]
         distro: [ '', '-alpine' ]
     env:
@@ -83,7 +83,7 @@ jobs:
     needs: base-images
     strategy:
       matrix:
-        version: [ '8.0', '8.1', '8.2', '8.3' ]
+        version: [ '8.0', '8.1', '8.2', '8.3', '8.4' ]
         flavor: [ '', '-fpm' ]
         distro: [ '', '-alpine' ]
     env:
@@ -147,7 +147,7 @@ jobs:
     needs: base-images
     strategy:
       matrix:
-        version: [ '8.0', '8.1', '8.2', '8.3' ]
+        version: [ '8.0', '8.1', '8.2', '8.3', '8.4' ]
         distro: [ '', '-alpine' ]
     env:
       IMAGE_NAME: columbusinteractive/php-swoole
@@ -209,7 +209,7 @@ jobs:
     if: "!contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]')"
     strategy:
       matrix:
-        version: [ '8.0', '8.1', '8.2', '8.3' ]
+        version: [ '8.0', '8.1', '8.2', '8.3', '8.4' ]
         distro: [ '', '-alpine' ]
     env:
       IMAGE_NAME: columbusinteractive/php-parallel
