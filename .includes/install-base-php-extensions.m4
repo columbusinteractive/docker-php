@@ -1,5 +1,5 @@
 # Install php-extension-installer
-COPY --from=mlocati/php-extension-installer:1 \
+COPY --from=mlocati/php-extension-installer:2 \
     /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 
 # Install PHP extensions
