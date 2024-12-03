@@ -29,13 +29,13 @@ jobs:
       BASE_DIR: .
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build Dockerfile
         run: |
@@ -45,7 +45,7 @@ jobs:
         working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -59,14 +59,14 @@ jobs:
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
@@ -93,13 +93,13 @@ jobs:
       BASE_DIR: ./dev
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build Dockerfile
         run: |
@@ -109,7 +109,7 @@ jobs:
         working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -123,14 +123,14 @@ jobs:
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
@@ -156,13 +156,13 @@ jobs:
       BASE_DIR: ./swoole
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build Dockerfile
         run: |
@@ -172,7 +172,7 @@ jobs:
         working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -186,14 +186,14 @@ jobs:
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
@@ -218,13 +218,13 @@ jobs:
       BASE_DIR: ./parallel
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build Dockerfile
         run: |
@@ -234,7 +234,7 @@ jobs:
         working-directory: ${{ env.BASE_DIR }}
 
       - name: Build image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BASE_DIR }}
           build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
@@ -248,14 +248,14 @@ jobs:
 
       - name: Login to DockerHub
         if: "github.event_name != 'pull_request'"
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
           context: ${{ env.BASE_DIR }}
