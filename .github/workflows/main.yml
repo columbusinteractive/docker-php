@@ -9,9 +9,6 @@ on:
   schedule:
     - cron: 0 0 * * 0
 
-env:
-  PLATFORMS: linux/amd64,linux/arm64
-
 jobs:
   base-images:
     name: Build, test and publish base images
@@ -30,9 +27,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -66,15 +60,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v6
-        with:
-          platforms: ${{ env.PLATFORMS }}
-          context: ${{ env.BASE_DIR }}
-          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
-          pull: true
-          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          push: true
+        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
   dev-images:
     name: Build, test and publish dev images
@@ -95,9 +81,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -130,15 +113,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v6
-        with:
-          platforms: ${{ env.PLATFORMS }}
-          context: ${{ env.BASE_DIR }}
-          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
-          pull: true
-          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          push: true
+        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
   swoole-images:
     name: Build, test and publish swoole images
@@ -158,9 +133,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -193,15 +165,7 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v6
-        with:
-          platforms: ${{ env.PLATFORMS }}
-          context: ${{ env.BASE_DIR }}
-          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
-          pull: true
-          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          push: true
+        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
   parallel-images:
     name: Build, test and publish parallel images
@@ -220,9 +184,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -255,12 +216,4 @@ jobs:
 
       - name: Push image to registry
         if: "github.event_name != 'pull_request'"
-        uses: docker/build-push-action@v6
-        with:
-          platforms: ${{ env.PLATFORMS }}
-          context: ${{ env.BASE_DIR }}
-          build-args: BASE_IMAGE_TAG=${{ env.BASE_IMAGE_TAG }}
-          pull: true
-          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          push: true
+        run: docker push "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
